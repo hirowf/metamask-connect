@@ -39,6 +39,11 @@ const WalletCard = () => {
       });
   };
 
+  const chainChangedHandler = () => {
+    window.location.reload();
+    window.ethereum.on("chainChanged", chainChangedHandler);
+  };
+
   return (
     <div className="flex flex-col justify-items-center items-center">
       <h4> {"Connect to your M E T A M A S K 🦊🦊🦊"} </h4>
