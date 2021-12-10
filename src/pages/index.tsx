@@ -1,9 +1,6 @@
 import Head from "next/head";
+import WalletCard from "../components/WalletCard";
 
 export default function Home() {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <button className="bg-cyan-500 rounded">Test</button>
-    </div>
-  );
+  return <WalletCard />;
 }
