@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { ethers } from "ethers";
+import { Listbox, Transition } from "@headlessui/react";
+import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 
 declare const window: Window &
   typeof globalThis & {
@@ -8,9 +10,10 @@ declare const window: Window &
 
 const WalletCard = () => {
   const [errorMessage, setErrorMessage] = useState(null);
-  const [defaultAccount, setDefaultAccount] = useState(null);
+  const [defaultAccount, setDefaultAccount] = useState([]);
   const [userBalance, setUserBalance] = useState(null);
   const [connectButtonText, setConnectButtonText] = useState("Connect Wallet");
+  const [selectedAccount, setSelectedAccount] = useState("");
 
   const connectWalletHandler = () => {
     if (window.ethereum) {
@@ -44,24 +47,36 @@ const WalletCard = () => {
     window.ethereum.on("chainChanged", chainChangedHandler);
   };
 
-  return (
-    <div className="flex flex-col justify-items-center items-center">
-      <h4> {"Connect to your M E T A M A S K 🦊🦊🦊"} </h4>
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
 
-      <button
-        className="bg-orange-400 rounded shadow-lg shadow-indigo-500/50 p-3"
-        onClick={connectWalletHandler}
-      >
-        {connectButtonText} 🦊
-      </button>
-      <div className="accountDisplay">
-        <h3>Address: {defaultAccount}</h3>
+  return (
+    <>
+      <div className="w-50 flex">
+        <div className="w-92 bg-white border-solid border-gray-100 shadow rounded">
+          {defaultAccount}
+        </div>
       </div>
-      <div className="balanceDisplay">
-        <h3>Balance: {userBalance}</h3>
+
+      <div className="flex flex-col justify-items-center items-center">
+        <h4> {"Connect to your M E T A M A S K 🦊🦊🦊"} </h4>
+
+        <button
+          className="bg-orange-400 rounded shadow-lg shadow-indigo-500/50 p-3"
+          onClick={connectWalletHandler}
+        >
+          {connectButtonText} 🦊
+        </button>
+        <div className="accountDisplay">
+          <h3>Address: {defaultAccount}</h3>
+        </div>
+        <div className="balanceDisplay">
+          <h3>Balance: {userBalance}</h3>
+        </div>
+        {errorMessage}
       </div>
-      {errorMessage}
-    </div>
+    </>
   );
 };
 
